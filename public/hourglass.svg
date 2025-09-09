@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Top and bottom frame bars -->
+  <rect x="14" y="6" width="36" height="8" rx="4" fill="#2563eb"/>
+  <rect x="14" y="50" width="36" height="8" rx="4" fill="#2563eb"/>
+
+  <!-- Glass outline (subtle) -->
+  <path d="M20 14h24c0 10-12 12-12 18s12 8 12 18H20c0-10 12-12 12-18S20 24 20 14z" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Sand (amber) -->
+  <polygon points="22,20 42,20 32,30" fill="#fbbf24"/>
+  <polygon points="22,44 42,44 32,34" fill="#fbbf24"/>
+
+  <!-- Neck grain -->
+  <circle cx="32" cy="32" r="1.7" fill="#f59e0b"/>
+
+  <!-- Frame side rails -->
+  <rect x="16" y="14" width="4" height="36" rx="2" fill="#2563eb"/>
+  <rect x="44" y="14" width="4" height="36" rx="2" fill="#2563eb"/>
+</svg>
+
+

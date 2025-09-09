@@ -55,7 +55,7 @@ export default function ResumeInput({ onSubmit, isLoading, value, onChangeText, 
 
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs text-slate-600 mb-1">How many future scenarios would you like to generate?</label>
+            <label className="block text-xs text-slate-600 mb-1">How many future chapters should we write?</label>
             <input
               type="number"
               min={1}
@@ -66,7 +66,7 @@ export default function ResumeInput({ onSubmit, isLoading, value, onChangeText, 
             />
           </div>
           <div>
-            <label className="block text-xs text-slate-600 mb-1">How many years would you like to project?</label>
+            <label className="block text-xs text-slate-600 mb-1">How far ahead should we time-skip (years)?</label>
             <input
               type="number"
               min={1}

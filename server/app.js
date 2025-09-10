@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 // Use server-side key only
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const client = new OpenAI({ apiKey: process.env.VITE_OPENAI_API_KEY });
 
 app.post('/api/generate', async (req, res) => {
   try {

@@ -37,7 +37,7 @@ export async function getAlternateFutures(
         {
           role: "user",
           content:
-            `Here is the resume/work history (plain text):\n\n${resumeText}\n\nTask: Normalize the given experiences into the schema above (use \\"years\\" with YYYY-YYYY, converting single years to ranges when needed), THEN append exactly ${opts.futureCount} future roles that logically follow from the last year, covering roughly the next ${opts.spanYears} years in total.\nRules for the future roles:\n- Use realistic job titles, fake company names, and concise, vivid descriptions (<= 2 sentences)\n- Keep tone witty yet professional\n- Use plausible, non-overlapping ranges (typically 3-6 years) that fit within ~${opts.spanYears} years overall\n- Preserve the original experiences (do not remove or rewrite them, only normalize years)\n- Sort the entire array ascending by the starting year.`,
+            `Here is the resume/work history (plain text):\n\n${resumeText}\n\nTask: Normalize the given experiences into the schema above (use \\"years\\" with YYYY-YYYY, converting single years to ranges when needed), THEN append exactly ${opts.futureCount} future roles that logically follow from the last year, covering exactly the next ${opts.spanYears} years in total.\nRules for the future roles:\n- Use realistic job titles, fake company names, and concise, vivid descriptions (<= 2 sentences)\n- Keep tone witty yet professional\n- Use plausible, non-overlapping ranges that fit within ~${opts.spanYears} years overall\n- Preserve the original experiences (do not remove or rewrite them, only normalize years)\n- Sort the entire array ascending by the starting year.`,
         },
       ],
       temperature: 0.7,

@@ -1,11 +1,9 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "api/generate.js", "use": "@vercel/node" },
-    { "src": "vite.config.ts", "use": "@vercel/static-build" }
-  ],
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "dist",
   "routes": [
-    { "src": "/api/generate", "dest": "/api/generate.js" },
+    { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

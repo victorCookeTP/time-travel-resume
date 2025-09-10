@@ -25,9 +25,14 @@ npm install
 echo 'VITE_OPENAI_API_KEY=sk-...' > .env
 ```
 
-3) Run the dev server
+3) Run the dev client
 ```bash
 npm run dev
+```
+
+4) Run the dev server
+```bash
+npm run dev:server
 ```
 
 Open the URL shown by Vite (e.g. `http://localhost:5174`).
@@ -47,8 +52,8 @@ Open the URL shown by Vite (e.g. `http://localhost:5174`).
 
 - `src/components/ResumeInput.tsx` — paste/upload, inputs for future count and years span
 - `src/components/Timeline.tsx` — animated vertical timeline component
-- `src/openai.ts` — OpenAI client and JSON-normalized generation
 - `src/App.tsx` — view switching, state management, and wiring
+- `api/generate.js` — OpenAI client
 
 ## Environment
 

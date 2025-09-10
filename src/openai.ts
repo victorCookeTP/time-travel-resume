@@ -14,7 +14,7 @@ type AlternateFutureRaw = {
 };
 
 // Backend API base (set VITE_API_BASE for prod; defaults to localhost dev server)
-const API_BASE = import.meta.env.VITE_API_BASE || ""; // empty -> same origin (Vercel edge/serverless)
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5175";
 
 export async function getAlternateFutures(
   resumeText: string,

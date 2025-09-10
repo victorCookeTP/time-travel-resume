@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import Layout from "./components/Layout";
+import Hero from "./components/Hero";
 import ResumeInput from "./components/ResumeInput";
 import { type FutureItem } from "./components/AlternateFutures";
 import Timeline, { type TimelineEvent } from "./components/Timeline";
@@ -94,28 +95,55 @@ function App() {
 
   const nav = useMemo(
     () => (
-      <div className="mx-auto max-w-6xl px-4 py-4 flex items-center gap-2">
-        <button
-          className={`px-3 py-1.5 rounded-md text-sm border ${mode === "input" ? "bg-blue-600 text-white border-blue-600" : "border-slate-300 text-slate-700 hover:bg-slate-100"}`}
-          onClick={() => setMode("input")}
-        >
-          Resume Input
-        </button>
-        <button
-          className={`px-3 py-1.5 rounded-md text-sm border ${mode === "timeline" ? "bg-blue-600 text-white border-blue-600" : "border-slate-300 text-slate-700 hover:bg-slate-100"}`}
-          onClick={() => setMode("timeline")}
-        >
-          Real Timeline
-        </button>
-        <button
-          className={`px-3 py-1.5 rounded-md text-sm border ${mode === "futures" ? "bg-blue-600 text-white border-blue-600" : "border-slate-300 text-slate-700 hover:bg-slate-100"}`}
-          onClick={() => setMode("futures")}
-        >
-          Alternate Futures
-        </button>
+      <div className="mx-auto max-w-6xl px-4 py-4 flex items-center gap-2 no-print">
+        {/* Left: view tabs */}
+        <div className="flex items-center gap-2">
+          <button
+            className={`px-3 py-1.5 rounded-md text-sm border ${mode === "input" ? "bg-blue-600 text-white border-blue-600" : "border-slate-300 text-slate-700 hover:bg-slate-100"}`}
+            onClick={() => setMode("input")}
+          >
+            Resume Input
+          </button>
+          <button
+            className={`px-3 py-1.5 rounded-md text-sm border ${mode === "timeline" ? "bg-blue-600 text-white border-blue-600" : "border-slate-300 text-slate-700 hover:bg-slate-100"}`}
+            onClick={() => setMode("timeline")}
+          >
+            Real Timeline
+          </button>
+          <button
+            className={`px-3 py-1.5 rounded-md text-sm border ${mode === "futures" ? "bg-blue-600 text-white border-blue-600" : "border-slate-300 text-slate-700 hover:bg-slate-100"}`}
+            onClick={() => setMode("futures")}
+          >
+            Alternate Futures
+          </button>
+        </div>
+        {/* Right: futures actions */}
+        {mode === "futures" && (
+          <div className="ml-auto flex items-center gap-2">
+            <button
+              className="px-3 py-1.5 rounded-md text-sm border border-slate-300 text-slate-700 hover:bg-slate-100"
+              onClick={() => setMode("input")}
+            >
+              New input
+            </button>
+            <button
+              className="px-3 py-1.5 rounded-md text-sm border border-slate-300 text-slate-700 hover:bg-slate-100"
+              onClick={() => window.print()}
+            >
+              Download PDF
+            </button>
+            <button
+              className="px-3 py-1.5 rounded-md text-sm border bg-emerald-600 text-white hover:bg-emerald-500 disabled:opacity-50"
+              onClick={() => (lastResumeText ? handleGenerate(lastResumeText) : setMode("input"))}
+              disabled={loading}
+            >
+              {loading ? "Generating..." : "Generate another future"}
+            </button>
+          </div>
+        )}
       </div>
     ),
-    [mode]
+    [mode, loading, lastResumeText]
   );
 
   return (
@@ -134,6 +162,7 @@ function App() {
           </div>
         </div>
       )}
+      <Hero />
       {nav}
       {mode === "input" && (
         <ResumeInput
@@ -154,24 +183,7 @@ function App() {
       )}
       {mode === "futures" && (
         <>
-          <div className="mx-auto max-w-6xl px-4">
-            <div className="flex items-center justify-end gap-2">
-              <button
-                className="px-3 py-1.5 rounded-md text-sm border border-slate-300 text-slate-700 hover:bg-slate-100"
-                onClick={() => setMode("input")}
-              >
-                New input
-              </button>
-              <button
-                className="px-3 py-1.5 rounded-md text-sm border bg-emerald-600 text-white hover:bg-emerald-500 disabled:opacity-50"
-                onClick={() => lastResumeText ? handleGenerate(lastResumeText) : setMode("input")}
-                disabled={loading}
-              >
-                {loading ? "Generating..." : "Generate another future 🌌"}
-              </button>
-            </div>
-          </div>
-          <div className="py-8">
+          <div id="futures-print" className="py-8">
             <Timeline
               key={futuresKey}
               title="Alternate Futures"

@@ -4,3 +4,13 @@
 html, body, #root {
   height: 100%;
 }
+
+/* Print styles for PDF */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff !important; }
+  header, footer, section { display: none !important; }
+  main > * { display: none !important; }
+  #futures-print { display: block !important; }
+  #futures-print * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

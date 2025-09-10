@@ -12,7 +12,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'resumeText is required' });
     }
 
-    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    const client = new OpenAI({ apiKey: process.env.VITE_OPENAI_API_KEY });
 
     const response = await client.chat.completions.create({
       model: 'gpt-4o-mini',

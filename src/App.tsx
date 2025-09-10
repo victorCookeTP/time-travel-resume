@@ -95,7 +95,7 @@ function App() {
 
   const nav = useMemo(
     () => (
-      <div className="mx-auto max-w-6xl px-4 py-4 flex items-center gap-2 no-print">
+      <div className={`mx-auto max-w-3xl px-4 py-4 flex items-center gap-2 no-print`}>
         {/* Left: view tabs */}
         <div className="flex items-center gap-2">
           <button
@@ -120,12 +120,12 @@ function App() {
         {/* Right: futures actions */}
         {mode === "futures" && (
           <div className="ml-auto flex items-center gap-2">
-            <button
+            {/* <button
               className="px-3 py-1.5 rounded-md text-sm border border-slate-300 text-slate-700 hover:bg-slate-100"
               onClick={() => setMode("input")}
             >
               New input
-            </button>
+            </button> */}
             <button
               className="px-3 py-1.5 rounded-md text-sm border border-slate-300 text-slate-700 hover:bg-slate-100"
               onClick={() => window.print()}

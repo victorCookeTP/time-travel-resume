@@ -1,5 +1,3 @@
-import OpenAI from "openai";
-
 export type AlternateFuture = {
   title: string;
   year: string; // can be a single year or a range like "2010-2015"
@@ -15,36 +13,22 @@ type AlternateFutureRaw = {
   description?: string;
 };
 
-// Create a typed client
-const client = new OpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY as string,
-  dangerouslyAllowBrowser: true, // ⚠️ Browser usage for hackathon/demo only
-});
+// Backend API base (set VITE_API_BASE for prod; defaults to localhost dev server)
+const API_BASE = import.meta.env.VITE_API_BASE || ""; // empty -> same origin (Vercel edge/serverless)
 
 export async function getAlternateFutures(
   resumeText: string,
   opts: { futureCount: number; spanYears: number } = { futureCount: 4, spanYears: 20 }
 ): Promise<AlternateFuture[]> {
   try {
-    const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a career AI that extends career timelines. Use a light, witty, professional tone. Output ONLY a compact JSON array of objects using this schema strictly: [{\\\"title\\\":\\\"string\\\",\\\"years\\\":\\\"YYYY-YYYY\\\",\\\"company\\\":\\\"string\\\",\\\"description\\\":\\\"string\\\"}]. No markdown fences or extra text.",
-        },
-        {
-          role: "user",
-          content:
-            `Here is the resume/work history (plain text):\n\n${resumeText}\n\nTask: Normalize the given experiences into the schema above (use \\"years\\" with YYYY-YYYY, converting single years to ranges when needed), THEN append exactly ${opts.futureCount} future roles that logically follow from the last year, covering exactly the next ${opts.spanYears} years in total.\nRules for the future roles:\n- Use realistic job titles, fake company names, and concise, vivid descriptions (<= 2 sentences)\n- Keep tone witty yet professional\n- Use plausible, non-overlapping ranges that fit within ~${opts.spanYears} years overall\n- Preserve the original experiences (do not remove or rewrite them, only normalize years)\n- Sort the entire array ascending by the starting year.`,
-        },
-      ],
-      temperature: 0.7,
-      max_tokens: 600,
+    const resp = await fetch(`${API_BASE}/api/generate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ resumeText, futureCount: opts.futureCount, spanYears: opts.spanYears }),
     });
+    if (!resp.ok) throw new Error("API error");
+    const { content: raw } = (await resp.json()) as { content: string };
 
-    const raw = response.choices[0]?.message?.content ?? "[]";
     try {
       const parsed = JSON.parse(raw) as AlternateFutureRaw[];
       if (!Array.isArray(parsed)) return [];
